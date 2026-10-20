@@ -16,6 +16,15 @@
 
 应用界面和单元测试不需要模型凭据。真实任务需要已安装并登录的 Agent，或自己的 API 地址与 Key；服务资格、额度及费用由所选供应商决定。
 
+## 下载 macOS 应用
+
+[全部版本](https://github.com/KyleZheng8848/cpet/releases) · **0.4.53**
+
+- [Apple Silicon（M 系列芯片）— DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-arm64.dmg)
+- [Intel 芯片 — DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-x64.dmg)
+
+Release 页面同时提供 ZIP 和 `SHA256SUMS.txt` 校验文件。应用采用临时签名，尚未经过 Apple 公证。打开 DMG 后，运行其中的「安装并打开.command」完成安装与启动。
+
 ## 功能
 
 - 透明、可拖动的桌宠，展示思考、工具、回复、完成、出错、等待等状态。
@@ -67,7 +76,7 @@ npm run build
 
 `.cursor/skills/` 随附皮肤制作、RSS 简报和提示词/工作流迭代技能。皮肤工具使用通过已授权工具制作或自行提供的本地图片。生成新素材、安装可选 Python 抠图依赖及下载模型均独立于 CPET 构建；自行添加素材与模型时保留相应权利和许可。
 
-源码未配置默认皮肤市场或二进制下载桶，相关可选服务会明确提示未配置。GitHub 仓库元数据标明源码归属，并可供更新检查器查询后续 Release；本次首次源码公开没有附带二进制 Release。
+源码未配置默认皮肤市场或二进制下载桶，相关可选服务会明确提示未配置。GitHub 仓库元数据标明源码归属，更新检查器可查询已发布的 GitHub Release。
 
 ## 数据与权限
 

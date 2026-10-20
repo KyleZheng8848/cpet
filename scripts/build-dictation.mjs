@@ -6,7 +6,8 @@
  * 3) resources/bin/cpet-dictation — 裸二进制（调试用）
  */
 import { spawnSync } from 'node:child_process'
-import { copyFileSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -30,9 +31,6 @@ rmSync(legacyApp, { recursive: true, force: true })
 rmSync(helperApp, { recursive: true, force: true })
 mkdirSync(outDir, { recursive: true })
 
-const arch = process.arch === 'arm64' ? 'arm64' : 'x86_64'
-const target = `${arch}-apple-macos13.0`
-
 function run(cmd, args) {
   const r = spawnSync(cmd, args, { encoding: 'utf8' })
   if (r.status !== 0) {
@@ -44,22 +42,37 @@ function run(cmd, args) {
   return r
 }
 
+// Both Electron architectures share resources/. Ship universal native components
+// so cross-packaging cannot silently include a helper for the build host only.
+function compileUniversal(output, args) {
+  const stage = mkdtempSync(join(tmpdir(), 'cpet-dictation-build-'))
+  try {
+    const slices = ['arm64', 'x86_64'].map((arch) => {
+      const slice = join(stage, arch)
+      run('swiftc', ['-O', '-target', `${arch}-apple-macos13.0`, ...args, '-o', slice])
+      return slice
+    })
+    run('lipo', ['-create', ...slices, '-output', output])
+    const arches = run('lipo', ['-archs', output]).stdout.trim().split(/\s+/)
+    if (!['arm64', 'x86_64'].every((arch) => arches.includes(arch))) {
+      throw new Error(`Incomplete universal binary: ${output}`)
+    }
+  } finally {
+    rmSync(stage, { recursive: true, force: true })
+  }
+}
+
 if (!existsSync(bridgeSrc)) {
   console.error('[build-dictation] missing', bridgeSrc)
   process.exit(1)
 }
 
 const exportsList = join(root, 'tools/cpet-speech/exports.txt')
-run('swiftc', [
-  '-O',
+compileUniversal(bridgeOut, [
   '-parse-as-library',
   '-emit-library',
   '-module-name',
   'CpetSpeech',
-  '-target',
-  target,
-  '-o',
-  bridgeOut,
   bridgeSrc,
   '-Xlinker',
   '-exported_symbols_list',
@@ -71,7 +84,7 @@ console.log('[build-dictation] wrote', bridgeOut, '(dylib, Identifier=Electron)'
 
 if (existsSync(helperSrc)) {
   // 仅依赖 .app/Contents/Info.plist（TCC 认这个）；裸跑调试才用 sectcreate
-  run('swiftc', ['-O', '-target', target, '-o', helperOut, helperSrc])
+  compileUniversal(helperOut, [helperSrc])
 
   const macosDir = join(helperApp, 'Contents', 'MacOS')
   mkdirSync(macosDir, { recursive: true })

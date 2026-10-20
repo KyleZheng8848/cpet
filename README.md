@@ -16,6 +16,15 @@ A desktop pet that reflects your coding agent's activity and opens a workspace f
 
 The application shell and unit tests work without model credentials. Real tasks require an installed, authenticated agent or your own API endpoint and key. Provider access, usage limits and billing remain with the service you choose.
 
+## Download the macOS app
+
+[All releases](https://github.com/KyleZheng8848/cpet/releases) · **0.4.53**
+
+- [Apple Silicon (M-series) — DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-arm64.dmg)
+- [Intel — DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-x64.dmg)
+
+ZIP alternatives and `SHA256SUMS.txt` are available on the release page. The apps use ad hoc signing and are not notarized by Apple. Open the DMG and run `安装并打开.command` to install and launch.
+
 ## Features
 
 - A draggable, transparent desktop pet with thinking, tool, reply, done, error and waiting states.
@@ -67,7 +76,7 @@ This public source snapshot includes the two image skins configured for applicat
 
 The bundled skills in `.cursor/skills/` cover skin creation, RSS digest writing and iterative prompt/workflow improvement. Skin tools accept local artwork supplied through authorized generation tools. Creating new images, optional Python cutout dependencies and external model downloads are separate from building CPET. Preserve the rights and licenses for any artwork or models you add.
 
-No default skin market or binary download bucket is configured in this source. The app shows an explicit unconfigured state for optional distribution services until a maintainer provides them. GitHub repository metadata identifies the source and can be used by the update checker for future releases; this initial source publication does not include a binary Release.
+No default skin market or binary download bucket is configured in this source. The app shows an explicit unconfigured state for optional distribution services until a maintainer provides them. GitHub repository metadata identifies the source and lets the update checker discover the published GitHub Releases.
 
 ## Data and permissions
 

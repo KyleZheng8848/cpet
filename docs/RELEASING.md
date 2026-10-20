@@ -155,3 +155,8 @@ CI 里可用环境变量覆盖，不必把主机地址写进仓库：`CPET_OSS_T
 两者都按当前平台/架构挑对应安装包，挑不到就只给下载页，绝不会把 arm64 的包推给 Intel 机器。
 
 目前只做到「发现新版 → 打开下载页」，不做静默自动安装：mac 包未签名（`identity: null`），electron-updater 在未签名应用上无法完成替换。等有 Developer ID 证书再换。
+
+
+## GitHub macOS Release
+
+Run **Actions → Publish macOS apps → Run workflow** on the reviewed commit. The workflow builds natively on Apple Silicon and Intel, verifies the application and both archives, then creates a new `v<version>` tag and GitHub Release with DMG, ZIP and SHA256 checksums. It refuses to overwrite an existing tag. After publication it downloads every installer anonymously and verifies its checksum. This workflow does not publish to OSS or install an app locally. Windows/Linux package targets remain available for local development and are not part of this macOS release workflow.

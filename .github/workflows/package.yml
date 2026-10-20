@@ -1,100 +1,112 @@
-# 三平台打包：macOS（arm64 + Intel x64）/ Windows / Linux
-# - 手动：Actions → Package → Run workflow
-# - 打 tag：git tag v0.3.37 && git push origin v0.3.37 → 自动打包并创建 GitHub Release
-name: Package
+name: Publish macOS apps
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v*'
+
+permissions:
+  contents: read
 
 concurrency:
-  group: package-${{ github.ref }}
-  cancel-in-progress: true
+  group: github-release
+  cancel-in-progress: false
 
 jobs:
-  # 三平台打包要十几分钟，先用几分钟的门禁挡住明显坏掉的提交
-  verify:
-    uses: ./.github/workflows/ci.yml
-
-  package:
-    name: ${{ matrix.name }}
-    needs: verify
-    runs-on: ${{ matrix.os }}
+  build:
+    timeout-minutes: 30
+    name: Build and verify ${{ matrix.arch }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - name: macOS
-            os: macos-latest
-            script: package:mac
-            artifact: mac
-          - name: Windows
-            os: windows-latest
-            script: package:win
-            artifact: win
-          - name: Linux
-            os: ubuntu-latest
-            script: package:linux
-            artifact: linux
-
+          - os: macos-15
+            arch: arm64
+            appdir: mac-arm64
+          - os: macos-15-intel
+            arch: x64
+            appdir: mac
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Package
-        run: npm run ${{ matrix.script }}
+      - run: npm ci --no-audit --no-fund
+      - name: Source version
+        id: version
+        run: echo "version=$(node -p 'require("./package.json").version')" >> "$GITHUB_OUTPUT"
+      - name: Build installers from this commit
         env:
-          # 与 electron-builder.yml 中 identity: null 一致，CI 不做代码签名
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-
-      - name: Collect installers
-        shell: bash
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
         run: |
-          mkdir -p artifacts
-          shopt -s nullglob
-          for f in release/*.dmg release/*-mac.zip release/*.exe release/*.AppImage release/*.blockmap; do
-            cp "$f" artifacts/
-          done
-          echo "Collected:"
-          ls -la artifacts
-          test -n "$(ls -A artifacts)" || { echo "No installers found in release/"; exit 1; }
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+          npm run verify
+          npm run icons
+          npm run build:dictation
+          npm run build
+          npx --no-install electron-builder --mac dmg zip --${{ matrix.arch }}
+          npm run verify:release
+      - name: Verify bundle and archives
+        run: >-
+          python3 scripts/verify-macos-release.py
+          --product CPET --version "${{ steps.version.outputs.version }}"
+          --arch "${{ matrix.arch }}" --repo "https://github.com/${{ github.repository }}"
+          --app "release/${{ matrix.appdir }}/CPET.app" --stem "release/CPET-${{ steps.version.outputs.version }}-${{ matrix.arch }}"
+      - uses: actions/upload-artifact@v4
         with:
-          name: CPET-${{ matrix.artifact }}-${{ github.ref_name }}
-          path: artifacts/*
+          name: installers-${{ matrix.arch }}
+          path: |
+            release/CPET-${{ steps.version.outputs.version }}-${{ matrix.arch }}.dmg
+            release/CPET-${{ steps.version.outputs.version }}-${{ matrix.arch }}.zip
+            release/${{ matrix.arch }}.sha256
           if-no-files-found: error
-          retention-days: 30
+          retention-days: 14
 
   release:
-    name: GitHub Release
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: package
+    needs: build
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
-          path: dist
+          path: installers
           merge-multiple: true
+      - name: Publish the verified installers
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION=$(node -p 'require("./package.json").version')
+          TAG="v$VERSION"
+          test -z "$(git ls-remote --tags origin "refs/tags/$TAG")" || { echo 'Tag already exists; refusing to overwrite'; exit 1; }
+          cd installers
+          cat arm64.sha256 x64.sha256 > SHA256SUMS.txt
+          sha256sum --check SHA256SUMS.txt
+          test "$(wc -l < SHA256SUMS.txt)" -eq 4
+          cat > release-notes.md <<'NOTES'
+          Published and maintained by **SofunAI Studio**.
 
-      - name: Publish release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/*
-          generate_release_notes: true
-          fail_on_unmatched_files: true
+          macOS applications built from the source commit linked to this tag. Choose **arm64** for Apple Silicon or **x64** for Intel. Both DMG and ZIP are provided; verify downloads with `SHA256SUMS.txt`.
+
+          Applications use ad hoc signatures and are **not notarized by Apple**. Mac package verification covers bundle versions, architectures, signatures, privacy exclusions, publisher/source links and archive contents. Interactive app behavior on all hardware is not implied by these packaging checks.
+
+          Open the DMG and run `安装并打开.command` to install and launch.
+
+          由 **SofunAI 工作室**出品并维护。安装包由本标签对应源码构建：M 系列芯片选 **arm64**，Intel 选 **x64**。提供 DMG、ZIP 与 SHA256 校验文件。
+
+          应用采用临时签名，尚未经过 Apple 公证。打开 DMG 后运行「安装并打开.command」安装并启动。
+          NOTES
+          gh release create "$TAG" ./*.dmg ./*.zip SHA256SUMS.txt --target "$GITHUB_SHA" --draft --title "CPET $VERSION" --notes-file release-notes.md
+          gh release edit "$TAG" --draft=false --latest
+          mkdir public-download
+          cd public-download
+          # Anonymous downloads exercise the same public URLs used by README.
+          while read -r HASH NAME; do
+            curl --fail --location --retry 3 --max-time 300 --silent --show-error "https://github.com/$GH_REPO/releases/download/$TAG/$NAME" -o "$NAME"
+          done < ../SHA256SUMS.txt
+          sha256sum --check ../SHA256SUMS.txt
+          gh release view "$TAG" --json url,tagName,isDraft,targetCommitish,assets

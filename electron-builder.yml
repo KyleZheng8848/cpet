@@ -104,7 +104,7 @@ mac:
         - arm64
 
 dmg:
-  title: CPET
+  title: CPET ${version} ${arch}
   # 用户应双击「安装并打开」，不要直接点 CPET.app（浏览器 quarantine 会误报已损坏）
   contents:
     - x: 140
