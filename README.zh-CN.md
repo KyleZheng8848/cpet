@@ -6,7 +6,7 @@
 
 **由 [SofunAI 工作室](assets/brand/README.md)出品并维护。**
 
-**[GitHub 仓库](https://github.com/KyleZheng8848/cpet)** · [问题反馈](https://github.com/KyleZheng8848/cpet/issues)
+**[GitHub 仓库](https://github.com/KyleZheng8848/cpet)** · **[Releases](https://github.com/KyleZheng8848/cpet/releases)** · **[下载最新版](https://github.com/KyleZheng8848/cpet/releases/latest)** · [问题反馈](https://github.com/KyleZheng8848/cpet/issues)
 
 [English](README.md) | **[简体中文](README.zh-CN.md)**
 
@@ -16,9 +16,9 @@
 
 应用界面和单元测试不需要模型凭据。真实任务需要已安装并登录的 Agent，或自己的 API 地址与 Key；服务资格、额度及费用由所选供应商决定。
 
-## 下载 macOS 应用
+## Releases · 下载 macOS 应用
 
-[全部版本](https://github.com/KyleZheng8848/cpet/releases) · **0.4.53**
+[Releases](https://github.com/KyleZheng8848/cpet/releases) · **[0.4.53](https://github.com/KyleZheng8848/cpet/releases/tag/v0.4.53)**
 
 - [Apple Silicon（M 系列芯片）— DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-arm64.dmg)
 - [Intel 芯片 — DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-x64.dmg)

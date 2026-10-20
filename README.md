@@ -6,7 +6,7 @@
 
 **Published and maintained by [SofunAI Studio](assets/brand/README.md).**
 
-**[GitHub repository](https://github.com/KyleZheng8848/cpet)** · [Report an issue](https://github.com/KyleZheng8848/cpet/issues)
+**[GitHub repository](https://github.com/KyleZheng8848/cpet)** · **[Releases](https://github.com/KyleZheng8848/cpet/releases)** · **[Download latest](https://github.com/KyleZheng8848/cpet/releases/latest)** · [Report an issue](https://github.com/KyleZheng8848/cpet/issues)
 
 **[English](README.md)** | [简体中文](README.zh-CN.md)
 
@@ -16,9 +16,9 @@ A desktop pet that reflects your coding agent's activity and opens a workspace f
 
 The application shell and unit tests work without model credentials. Real tasks require an installed, authenticated agent or your own API endpoint and key. Provider access, usage limits and billing remain with the service you choose.
 
-## Download the macOS app
+## Releases · Download the macOS app
 
-[All releases](https://github.com/KyleZheng8848/cpet/releases) · **0.4.53**
+[Releases](https://github.com/KyleZheng8848/cpet/releases) · **[0.4.53](https://github.com/KyleZheng8848/cpet/releases/tag/v0.4.53)**
 
 - [Apple Silicon (M-series) — DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-arm64.dmg)
 - [Intel — DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-x64.dmg)
