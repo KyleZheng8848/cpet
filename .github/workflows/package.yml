@@ -43,7 +43,7 @@ jobs:
           npm run icons
           npm run build:dictation
           npm run build
-          npx --no-install electron-builder --mac dmg zip --${{ matrix.arch }}
+          npx --no-install electron-builder --mac dmg zip --${{ matrix.arch }} --publish never
           npm run verify:release
       - name: Verify bundle and archives
         run: >-
