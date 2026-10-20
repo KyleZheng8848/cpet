@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "note": "Named action GIFs (NOT PetState). Filenames must not collide with lifecycle/docked reserved names. Runtime loads them into LoadedImageSkin.actions. FRAMES=3..8 (default 4): 00=poseA, 01..N-2=pose/prop (animBeat + optional animBeats[]), last=blink. Mid frames must not be blink-only.",
+  "actions": [
+    { "id": "wave", "pose": "waving one tiny paw hello, cheerful open eyes", "animBeat": "wave paw on the opposite swing (up↔down), clear arm motion, eyes stay open", "eyesClosed": false },
+    { "id": "bow", "pose": "polite little bow, head dipped, respectful cute smile", "animBeat": "bow a bit deeper then ease up, head/torso angle change, eyes stay open", "eyesClosed": false },
+    { "id": "clap", "pose": "clapping tiny paws together, happy sparkles", "animBeat": "paws apart mid-clap then nearly touching, sparkles shift, eyes stay open", "eyesClosed": false },
+    { "id": "dance", "pose": "cute dance hop, one paw up, joyful rhythm", "animBeat": "hop to the other foot / switch which paw is up, body lean opposite side, eyes stay open", "eyesClosed": false },
+    { "id": "stretch", "pose": "full-body morning stretch, arms up, content face", "animBeat": "stretch taller with arms higher, tiny lean, eyes stay open", "eyesClosed": false },
+    { "id": "yawn", "pose": "big yawn, eyes closed crescents, sleepy stretch", "animBeat": "mouth open wider yawn, arms stretch further, eyes stay closed crescents", "eyesClosed": true },
+    { "id": "eat", "pose": "nibbling a tiny snack, cheeks full, cute chew", "animBeat": "chew cycle — snack closer to mouth, cheeks puff differently, eyes stay open", "eyesClosed": false },
+    { "id": "drink", "pose": "sipping from a tiny cup, both paws holding cup", "animBeat": "tilt cup to sip, head tip, liquid/steam hint shifts, eyes stay open", "eyesClosed": false },
+    { "id": "read", "pose": "reading a tiny book/tablet, focused soft eyes", "animBeat": "turn a page or tilt the book, gaze on page, eyes stay open", "eyesClosed": false },
+    { "id": "music", "pose": "listening to music with tiny headphones, swaying", "animBeat": "sway body the other way, headphone cable/ear shift, eyes stay open", "eyesClosed": false },
+    { "id": "code", "pose": "typing on a tiny laptop, focused coding pose", "animBeat": "paws mid-type alternate position on keys, screen glow hint, eyes stay open", "eyesClosed": false },
+    { "id": "coffee", "pose": "holding a tiny coffee/tea cup, cozy warm smile", "animBeat": "lift cup slightly toward mouth, steam drifts, eyes stay open", "eyesClosed": false },
+    { "id": "love", "pose": "heart eyes / floating hearts, melting affectionate pose", "animBeat": "hearts drift to new positions, lean more into affection, eyes stay open", "eyesClosed": false },
+    { "id": "angry", "pose": "puffy angry cheeks, tiny frown, still adorable not scary", "animBeat": "cheeks puff bigger / stomp tiny foot, frown accent, eyes stay open", "eyesClosed": false },
+    { "id": "confused", "pose": "tilted head, question sparkle, puzzled cute eyes", "animBeat": "tilt head the other way, question mark moves, eyes stay open", "eyesClosed": false },
+    { "id": "celebrate", "pose": "victory celebration, both arms up, confetti sparkles", "animBeat": "arms pump higher, confetti in new places, eyes stay open", "eyesClosed": false },
+    { "id": "thumbs", "pose": "thumbs-up with a tiny paw, encouraging smile", "animBeat": "thumbs-up paw bob closer to camera, other paw accent, eyes stay open", "eyesClosed": false },
+    { "id": "rain", "pose": "under a tiny umbrella in soft rain drops, cozy", "animBeat": "tilt umbrella, raindrops in new positions, eyes stay open", "eyesClosed": false },
+    { "id": "snow", "pose": "catching a snowflake, winter cozy cute pose", "animBeat": "paw reach higher for flake, snowflakes shift, eyes stay open", "eyesClosed": false },
+    { "id": "birthday", "pose": "tiny birthday cake and party hat, celebratory smile", "animBeat": "cake candles flicker / hat tip, party pose accent, eyes stay open", "eyesClosed": false }
+  ]
+}

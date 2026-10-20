@@ -1,0 +1,7 @@
+{
+  "id": "cloud-sheep",
+  "packName": "云朵羊",
+  "characterPrompt": "a SINGLE chubby WHITE cloud-sheep desktop pet as one soft cotton-cloud wool ball with a cute sheep face nestled in the fluff; tiny peach-pink sheep ears; big glossy dark eyes soft blush small cream snout; thick warm-gray outline; primarily a round cloud-blob body — for idle/sleep show NO feet/hooves; when a pose needs limbs show at most TWO tiny front hoof-hands only and NEVER large foot soles, paw pads, belly feet rows, or 5–6 limbs; NO floating cloud decorations anywhere; NOTHING else in frame; opaque solid #FFFFFF canvas; kawaii cutout mascot",
+  "identityRef": "raw/idle.png",
+  "model": "Qwen-Image-2512-Lightning"
+}

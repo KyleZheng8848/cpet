@@ -1,0 +1,3 @@
+_cpet_speech_live_start
+_cpet_speech_live_push
+_cpet_speech_live_stop

@@ -1,0 +1,54 @@
+# 质量门禁：typecheck + lint + 单元测试 + 版本同步
+# 与 Package 分开：这个几分钟内出结果，每次 push / PR 都跑；打包只在发版时跑。
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+  # 供 Package 复用：发版前必须先过这道门
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck / Lint / Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # 部分主进程逻辑会导入 Electron 包入口，但测试不启动图形应用。
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      # package.json / CHANGELOG.md / src/shared/changelog.ts 必须指向同一版本，
+      # 否则用户在「关于 → 更新日志」看到的和实际装的版本不一致。
+      - name: Version sync
+        run: npm run check:version
+
+      - name: Build production bundles
+        run: npm run build

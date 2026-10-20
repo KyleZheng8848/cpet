@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# CPET skin factory — single entry point. Works from any cwd, in any project.
+#
+#   export CPET="$HOME/.cursor/skills/cpet-cute-skins"
+#   "$CPET/bin/cpet" doctor
+#
+# Output goes to $CPET_OUT_DIR, else ./cpet-skins (see `cpet paths`).
+set -euo pipefail
+
+SKILL="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+S="$SKILL/scripts"
+PY="${CPET_PYTHON:-python3}"
+
+usage() {
+  cat <<EOF
+cpet <command> [args]        skill: $SKILL
+
+  doctor                       check node/python/deps/paths
+  paths                        show where output will be written
+  new --id <id> --name <包名> --prompt "<角色锁定>"
+  pick <id> <candidate.png>    lock the winner as raw/idle.png
+  sam2 <png>...                SAM2 cutout → opaque white (keeps light clothes)
+  flatten <png>...             flood-fill fake bg → white (eats ivory/blush/white cloth)
+  qa <id> [--pack 包名]        BG/MATTE hard gate
+  gif <id>                     hard-cut GIFs → <out>/<包名>/
+  dock <包名>                  docked / docked-left / docked-right
+  validate [--strict-actions] <包名>
+  install <包名>               copy pack into the CPET app userData dir
+  sync [dest]                  mirror this skill dir to another copy
+
+Env: FRAMES=3..8 · FORCE=1 · CPET_OUT_DIR=<dir>
+EOF
+}
+
+cmd="${1:-}"
+[ $# -gt 0 ] && shift || true
+
+case "$cmd" in
+  doctor)   exec node "$S/doctor.mjs" "$@" ;;
+  paths)    exec node "$S/doctor.mjs" --paths-only "$@" ;;
+  new)      exec node "$S/new-skin.mjs" "$@" ;;
+  sam2)     exec "$PY" "$S/sam2-cutout.py" "$@" ;;
+  flatten)  exec "$PY" "$S/flatten-skin-bg.py" "$@" ;;
+  qa)       exec "$PY" "$S/qa-skin-raws.py" "$@" ;;
+  gif)      exec "$PY" "$S/animate-cute-skins.py" "$@" ;;
+  dock)     exec "$PY" "$S/make-docked-from-idle.py" "$@" ;;
+  validate) exec "$PY" "$S/validate-cute-skins.py" "$@" ;;
+  pick)     exec node "$S/pick-idle.mjs" "$@" ;;
+  install)  exec node "$S/install-pack.mjs" "$@" ;;
+  sync)     exec bash "$S/sync-skill-copies.sh" "$@" ;;
+  ""|-h|--help|help) usage ;;
+  *) echo "unknown command: $cmd" >&2; usage >&2; exit 1 ;;
+esac

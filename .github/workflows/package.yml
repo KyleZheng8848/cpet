@@ -1,0 +1,100 @@
+# 三平台打包：macOS（arm64 + Intel x64）/ Windows / Linux
+# - 手动：Actions → Package → Run workflow
+# - 打 tag：git tag v0.3.37 && git push origin v0.3.37 → 自动打包并创建 GitHub Release
+name: Package
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+concurrency:
+  group: package-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 三平台打包要十几分钟，先用几分钟的门禁挡住明显坏掉的提交
+  verify:
+    uses: ./.github/workflows/ci.yml
+
+  package:
+    name: ${{ matrix.name }}
+    needs: verify
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS
+            os: macos-latest
+            script: package:mac
+            artifact: mac
+          - name: Windows
+            os: windows-latest
+            script: package:win
+            artifact: win
+          - name: Linux
+            os: ubuntu-latest
+            script: package:linux
+            artifact: linux
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Package
+        run: npm run ${{ matrix.script }}
+        env:
+          # 与 electron-builder.yml 中 identity: null 一致，CI 不做代码签名
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - name: Collect installers
+        shell: bash
+        run: |
+          mkdir -p artifacts
+          shopt -s nullglob
+          for f in release/*.dmg release/*-mac.zip release/*.exe release/*.AppImage release/*.blockmap; do
+            cp "$f" artifacts/
+          done
+          echo "Collected:"
+          ls -la artifacts
+          test -n "$(ls -A artifacts)" || { echo "No installers found in release/"; exit 1; }
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: CPET-${{ matrix.artifact }}-${{ github.ref_name }}
+          path: artifacts/*
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    name: GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          fail_on_unmatched_files: true

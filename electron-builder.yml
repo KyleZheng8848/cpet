@@ -1,0 +1,138 @@
+appId: com.cpet.app
+productName: CPET
+copyright: Copyright © 2026 KyleZheng8848 and SofunAI Studio
+
+# 文件名始终带架构，避免 Intel 包被误当成「默认版」装到 M 系列上
+artifactName: ${productName}-${version}-${arch}.${ext}
+
+directories:
+  output: release
+  buildResources: build
+
+afterPack: scripts/after-pack-dictation.cjs
+
+# koffi 含原生二进制，必须从 asar 解出才能 dlopen
+asarUnpack:
+  - '**/node_modules/koffi/**'
+  - '**/node_modules/@koromix/koffi-*/**'
+
+# 打进包里的文件（仅构建产物；对话/设置在系统 userData，绝不进包）
+files:
+  - out/**
+  - package.json
+  - LICENSE
+  - assets/brand/LICENSE
+  - '!**/*.map'
+  - '!**/chat-store.json'
+  - '!**/chat-history.json'
+  - '!**/settings.json'
+  - '!**/schedules.json'
+
+# 托盘等图标要能通过 process.resourcesPath 读到，放到 Contents/Resources 根
+# 内置图片皮肤打进 Contents/Resources/skins（启动时按需拷入唯一目录 userData/skins）
+# 注意：不要把 ~/Library/Application Support 或用户自定义 skins 拷进 assets
+extraResources:
+  - from: resources
+    to: .
+    filter:
+      - '**/*'
+      - '!**/chat-store.json'
+      - '!**/chat-history.json'
+      - '!**/settings.json'
+  # 原则上每次打包只打默认内置：赛博幽灵 + 数字佳人（其余走皮肤市场）。
+  # 与 src/shared/bundledSkins.ts / package.json cpet.bundledSkins 保持一致。
+  # _work / _frames 绝不能进包；闸门见 scripts/verify-release-clean.mjs。
+  - from: assets/skins/赛博幽灵
+    to: skins/赛博幽灵
+    filter:
+      - '**/*'
+      - '!**/.DS_Store'
+      - '!**/.cache/**'
+      - '!**/_work/**'
+      - '!**/_frames/**'
+  - from: assets/skins/数字佳人
+    to: skins/数字佳人
+    filter:
+      - '**/*'
+      - '!**/.DS_Store'
+      - '!**/.cache/**'
+      - '!**/_work/**'
+      - '!**/_frames/**'
+  # 内置 Skill：装完包即可在对话技能选择器里选到（开发态扫仓库 .cursor/skills）
+  - from: .cursor/skills/cpet-cute-skins
+    to: skills/cpet-cute-skins
+    filter:
+      - '**/*'
+      - '!**/.DS_Store'
+      - '!**/__pycache__/**'
+      - '!**/.cache/**'
+      - '!**/.cpet-bundled'
+      - '!**/_work/**'
+      - '!**/_frames/**'
+  - from: .cursor/skills/harsh-optimize-loop
+    to: skills/harsh-optimize-loop
+    filter:
+      - '**/*'
+      - '!**/.DS_Store'
+      - '!**/__pycache__/**'
+      - '!**/.cache/**'
+  - from: .cursor/skills/cpet-rss-digest
+    to: skills/cpet-rss-digest
+    filter:
+      - '**/*'
+      - '!**/.DS_Store'
+
+mac:
+  category: public.app-category.developer-tools
+  icon: build/icon.png
+  # 无 Apple Developer ID 时用 ad-hoc（「-」），比完全不签名更不易被当成「已损坏」。
+  # 真正消掉 Gatekeeper 误报靠 DMG 里的「安装并打开.command」（拷贝 + xattr）。
+  identity: '-'
+  hardenedRuntime: false
+  extendInfo:
+    NSHumanReadableCopyright: Copyright © 2026 KyleZheng8848 and SofunAI Studio
+    NSMicrophoneUsageDescription: CPET 需要麦克风权限以进行语音输入
+    NSSpeechRecognitionUsageDescription: CPET 需要语音识别权限以将语音转为文字
+  # 本地默认只打 arm64：DMG/zip×双架构会把时间拖到 10–15 分钟。
+  # 需要 Intel 包时用：npx electron-builder --mac --x64
+  target:
+    - target: dmg
+      arch:
+        - arm64
+    - target: zip
+      arch:
+        - arm64
+
+dmg:
+  title: CPET
+  # 用户应双击「安装并打开」，不要直接点 CPET.app（浏览器 quarantine 会误报已损坏）
+  contents:
+    - x: 140
+      y: 180
+    - x: 400
+      y: 180
+      type: link
+      path: /Applications
+    - x: 270
+      y: 360
+      type: file
+      path: scripts/mac-first-open.command
+      name: 安装并打开.command
+
+win:
+  icon: build/icon.png
+  target:
+    - target: nsis
+      arch:
+        - x64
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+
+linux:
+  icon: build/icon.png
+  category: Utility
+  target:
+    - AppImage

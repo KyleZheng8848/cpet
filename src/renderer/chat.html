@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https: http: cpet-file:; media-src 'self' data: https: http: cpet-file:; frame-src https: http: cpet-file:;"
+    />
+    <title>CPET · 对话</title>
+  </head>
+  <body style="margin:0;background:#f6efe0;color:#3b2f1e;font:14px/1.45 ui-sans-serif,system-ui,sans-serif">
+    <div id="root">
+      <div
+        id="chat-boot-placeholder"
+        style="padding:28px 24px;opacity:0.72"
+        data-cpet-boot="1"
+      >
+        正在加载对话窗…
+      </div>
+    </div>
+    <script type="module" src="/src/chat/main.tsx"></script>
+  </body>
+</html>

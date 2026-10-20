@@ -1,0 +1,198 @@
+/* 对话窗 / 皮肤窗共用的 data-theme 色板 */
+:root,
+:root[data-theme='paper'] {
+  /* 默认：实验室台面（冷白 + 白卡片 + 蓝） */
+  --paper: #f4f6fa;
+  --paper-2: #ffffff;
+  --paper-3: #eef1f6;
+  --ink: #1d2129;
+  --ink-dim: #4e5969;
+  --muted: #86909c;
+  --rule: transparent;
+  --line: #e5e6eb;
+  --accent: #1677ff;
+  --accent-2: #0e42d2;
+  --ok: #00b42a;
+  --warn: #ff7d00;
+  --bad: #f53f3f;
+  --sticky: #e8f3ff;
+  --header-from: #ffffff;
+  --header-to: #f3f7ff;
+}
+
+:root[data-theme='ink'] {
+  --paper: #1a1d23;
+  --paper-2: #232830;
+  --paper-3: #2c323c;
+  --ink: #e8eaed;
+  --ink-dim: #9aa3ad;
+  --muted: #6b7380;
+  --rule: rgba(255, 255, 255, 0.08);
+  --line: #3a424e;
+  --accent: #7eb8da;
+  --accent-2: #a8c5a3;
+  --ok: #6fbf8a;
+  --warn: #d4a84b;
+  --bad: #e07070;
+  --sticky: #3d3520;
+  --header-from: #1e2229;
+  --header-to: #1a1d23;
+}
+
+:root[data-theme='mint'] {
+  --paper: #e8f2ef;
+  --paper-2: #f4faf8;
+  --paper-3: #d9ebe5;
+  --ink: #243532;
+  --ink-dim: #5a736c;
+  --muted: #7a948c;
+  --rule: rgba(42, 122, 106, 0.12);
+  --line: #c5ddd5;
+  --accent: #2a7a6a;
+  --accent-2: #3f6b8f;
+  --ok: #3d8f6e;
+  --warn: #c4923a;
+  --bad: #c45a4a;
+  --sticky: #dff0c9;
+  --header-from: #dceae5;
+  --header-to: #e8f2ef;
+}
+
+:root[data-theme='dusk'] {
+  --paper: #2a221c;
+  --paper-2: #342a22;
+  --paper-3: #3f3329;
+  --ink: #f0e6d8;
+  --ink-dim: #b8a894;
+  --muted: #8a7a68;
+  --rule: rgba(240, 230, 216, 0.1);
+  --line: #4a3d32;
+  --accent: #d4a574;
+  --accent-2: #8fb3c9;
+  --ok: #7aaf88;
+  --warn: #d4a84b;
+  --bad: #d87a6a;
+  --sticky: #4a3c28;
+  --header-from: #322820;
+  --header-to: #2a221c;
+}
+
+:root[data-theme='rose'] {
+  --paper: #f7ecef;
+  --paper-2: #fff8fa;
+  --paper-3: #f0dde3;
+  --ink: #4a3038;
+  --ink-dim: #8a6570;
+  --muted: #b08a96;
+  --rule: rgba(196, 92, 122, 0.12);
+  --line: #e5c8d1;
+  --accent: #c45c7a;
+  --accent-2: #6b7fa3;
+  --ok: #5f9a72;
+  --warn: #d19a3e;
+  --bad: #c65a45;
+  --sticky: #fde4ec;
+  --header-from: #f2e0e6;
+  --header-to: #f7ecef;
+}
+
+:root[data-theme='slate'] {
+  --paper: #eef1f4;
+  --paper-2: #f7f9fb;
+  --paper-3: #e2e7ed;
+  --ink: #2c333c;
+  --ink-dim: #6a7380;
+  --muted: #8a94a0;
+  --rule: rgba(91, 124, 153, 0.12);
+  --line: #cfd6de;
+  --accent: #5b7c99;
+  --accent-2: #7a9a6e;
+  --ok: #5f9a72;
+  --warn: #d19a3e;
+  --bad: #c65a45;
+  --sticky: #e8eef4;
+  --header-from: #e4e9ef;
+  --header-to: #eef1f4;
+}
+
+:root[data-theme='matcha'] {
+  --paper: #eef3e4;
+  --paper-2: #f7faf0;
+  --paper-3: #e2ead4;
+  --ink: #2f3a28;
+  --ink-dim: #5f7054;
+  --muted: #87967a;
+  --rule: rgba(106, 143, 78, 0.14);
+  --line: #cdd8bb;
+  --accent: #6a8f4e;
+  --accent-2: #5a7a8f;
+  --ok: #5f9a72;
+  --warn: #d19a3e;
+  --bad: #c65a45;
+  --sticky: #e8f0d4;
+  --header-from: #e4ebd8;
+  --header-to: #eef3e4;
+}
+
+:root[data-theme='aurora'] {
+  --paper: #14182a;
+  --paper-2: #1c2238;
+  --paper-3: #262e48;
+  --ink: #e6eaf8;
+  --ink-dim: #9aa6c8;
+  --muted: #6b7698;
+  --rule: rgba(110, 200, 192, 0.12);
+  --line: #343e5e;
+  --accent: #6ec8c0;
+  --accent-2: #b48fd4;
+  --ok: #6fbf8a;
+  --warn: #d4a84b;
+  --bad: #e07070;
+  --sticky: #2a3048;
+  --header-from: #181e34;
+  --header-to: #14182a;
+}
+
+/* 产品字体与形体：盖过各主题里的系统默认字，颜色仍走上面的 palettes */
+:root,
+:root[data-theme] {
+  --mono: 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+  --sans: 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  --display: var(--sans);
+  --hand: var(--sans);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 12px;
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 18px rgba(15, 23, 42, 0.05);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --glass: color-mix(in srgb, var(--paper-2) 72%, transparent);
+  --glass-2: color-mix(in srgb, var(--paper-2) 48%, transparent);
+  --glass-line: color-mix(in srgb, var(--line) 62%, transparent);
+  --glass-shine: color-mix(in srgb, var(--paper-2) 86%, transparent);
+  --page-wash:
+    radial-gradient(920px 420px at 8% -8%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 58%),
+    radial-gradient(760px 380px at 96% 0%, color-mix(in srgb, var(--sticky) 78%, transparent), transparent 54%),
+    linear-gradient(180deg, color-mix(in srgb, var(--sticky) 40%, var(--paper)), var(--paper) 62%);
+  --card:
+    linear-gradient(180deg, color-mix(in srgb, var(--paper-2) 84%, transparent), var(--glass));
+}
+
+/* 自定义主题：变量由 JS 写入；此处给兜底。洗色跟 accent/paper 走 */
+:root[data-theme='custom'] {
+  --paper: #f4f6fa;
+  --paper-2: #ffffff;
+  --paper-3: #eef1f6;
+  --ink: #1d2129;
+  --ink-dim: #4e5969;
+  --muted: #86909c;
+  --rule: transparent;
+  --line: #e5e6eb;
+  --accent: #1677ff;
+  --accent-2: #0e42d2;
+  --ok: #00b42a;
+  --warn: #ff7d00;
+  --bad: #f53f3f;
+  --sticky: color-mix(in srgb, var(--accent) 16%, var(--paper));
+  --header-from: color-mix(in srgb, var(--paper-2) 88%, transparent);
+  --header-to: var(--glass);
+}

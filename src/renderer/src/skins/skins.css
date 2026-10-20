@@ -1,0 +1,311 @@
+@import '../theme/chatThemes.css';
+
+/* 皮肤窗：复用对话窗 data-theme 变量，壳层对齐 chat-header */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--page-wash, var(--paper));
+  color: var(--ink);
+  font-family: var(--sans, 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-btn {
+  border: 0;
+  background: color-mix(in srgb, var(--accent) 16%, var(--paper-2));
+  color: var(--ink);
+  border-radius: var(--radius-sm, 3px);
+  padding: 6px 11px;
+  font-size: 12.5px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.settings-btn.tiny {
+  padding: 4px 8px;
+  font-size: 11px;
+}
+.settings-btn.ghost {
+  background: transparent;
+}
+.settings-btn.danger {
+  color: var(--bad, #b33);
+}
+.settings-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.settings-btn:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+
+.settings-desc {
+  font-size: 12px;
+  color: var(--ink-dim);
+  line-height: 1.45;
+  margin: 0;
+}
+.settings-desc.tight {
+  margin: 0;
+}
+
+code {
+  font-size: 11px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+
+.skin-window-drag {
+  -webkit-app-region: drag;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  /* macOS hiddenInset 交通灯占位，与 .chat-header 对齐 */
+  padding: 8px 12px 8px 80px;
+  border-bottom: 1px solid var(--glass-line, var(--line));
+  background: var(--card, linear-gradient(180deg, var(--header-from), var(--header-to)));
+  box-shadow: inset 0 1px 0 var(--glass-shine, transparent);
+  backdrop-filter: blur(16px) saturate(1.18);
+  -webkit-backdrop-filter: blur(16px) saturate(1.18);
+}
+.skin-window-drag button {
+  -webkit-app-region: no-drag;
+}
+.skin-window-title-block {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.skin-window-title {
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+.skin-window-sub {
+  font-size: 11px;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.skin-window-sub strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.skin-window-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.skin-market {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: transparent;
+}
+.skin-market-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px 0;
+  flex-shrink: 0;
+}
+.skin-market-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0;
+}
+.skin-market-tabs button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-dim);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.skin-market-tabs button.on {
+  border-color: var(--line);
+  background: var(--paper-2);
+  color: var(--ink);
+  font-weight: 600;
+}
+.skin-market-head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.skin-market-flash {
+  margin: 8px 12px 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 14%, var(--paper-2));
+  color: var(--ink);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.skin-market-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 12px 18px;
+}
+.skin-market-section {
+  margin-top: 14px;
+}
+.skin-market-section:first-child {
+  margin-top: 4px;
+}
+.skin-market-section h3 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--ink);
+}
+.skin-market-section-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.skin-market-warn {
+  color: var(--bad, #b33);
+}
+
+.skin-market-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+.skin-market-grid.vector {
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 6px;
+}
+
+.skin-market-card {
+  border: 1px solid var(--glass-line, var(--line));
+  border-radius: 14px;
+  background: var(--card, var(--paper-2));
+  box-shadow: inset 0 1px 0 var(--glass-shine, transparent);
+  backdrop-filter: blur(14px) saturate(1.12);
+  -webkit-backdrop-filter: blur(14px) saturate(1.12);
+  color: var(--ink);
+  text-align: left;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 56px;
+  transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+.skin-market-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+}
+.skin-market-card.pack {
+  cursor: default;
+  padding: 0;
+  overflow: hidden;
+}
+.skin-market-card.on {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--paper-2));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.skin-market-card.vector-chip {
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 8px 6px;
+  text-align: center;
+  gap: 2px;
+}
+.skin-market-card-emoji {
+  font-size: 18px;
+  line-height: 1.2;
+}
+.skin-market-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+}
+.skin-market-card-main.static {
+  cursor: default;
+}
+.skin-market-card-name {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.skin-market-card-meta,
+.skin-market-card-desc {
+  font-size: 11px;
+  color: var(--ink-dim);
+  line-height: 1.35;
+}
+.skin-market-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--paper) 70%, var(--paper-2));
+  margin-bottom: 2px;
+}
+.skin-market-thumb.placeholder {
+  background:
+    linear-gradient(
+      135deg,
+      transparent 40%,
+      color-mix(in srgb, var(--line) 55%, transparent) 40% 60%,
+      transparent 60%
+    ),
+    var(--paper);
+}
+.skin-market-card-actions {
+  display: flex;
+  gap: 4px;
+  padding: 0 8px 8px;
+  flex-wrap: wrap;
+}
+
+.skin-market-empty {
+  margin-top: 8px;
+  padding: 14px 12px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--paper-2) 70%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.skin-market-empty .settings-desc {
+  margin: 0;
+}

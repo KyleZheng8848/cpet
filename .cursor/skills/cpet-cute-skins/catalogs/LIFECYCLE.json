@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "states": [
+    { "id": "idle", "pose": "sitting happily, gentle idle pose, cozy and soft", "animBeat": "tiny ear or body bob, same cozy sit, eyes stay open", "eyesClosed": false },
+    { "id": "thinking", "pose": "tilted head, one paw on chin, curious eyes looking up, tiny thought sparkles", "animBeat": "paw shifts on chin, thought sparkles move, eyes stay open", "eyesClosed": false },
+    { "id": "tool", "pose": "holding tiny tools or laptop, focused determined cute working face", "animBeat": "tool/laptop paws mid-work alternate, focus stays, eyes stay open", "eyesClosed": false },
+    { "id": "talking", "pose": "mouth open mid-chat, cheerful talking pose, little heart particles", "animBeat": "mouth shape changes mid-speech, tiny gesture accent, eyes stay open", "eyesClosed": false },
+    { "id": "done", "pose": "celebrating with both tiny arms up, proud happy smile", "animBeat": "arms pump higher in cheer, body hop, eyes stay open", "eyesClosed": false },
+    { "id": "error", "pose": "teary round eyes, tiny sweat drop, apologetic worried expression", "animBeat": "sweat drop moves, tiny tremble / paws clasp, eyes stay open", "eyesClosed": false },
+    { "id": "sleeping", "pose": "curled up sleeping, eyes fully closed crescents, soft Zzz, peaceful", "animBeat": "soft breathe / Zzz drifts, eyes stay closed crescents", "eyesClosed": true },
+    { "id": "waiting", "pose": "sitting patiently, hopeful blinking eyes, optional tiny hourglass", "animBeat": "lean / ear perk, hourglass sand hint, eyes stay open", "eyesClosed": false },
+    { "id": "petted", "pose": "eyes closed blissfully, hearts floating, leaning into petting", "animBeat": "lean further into pets, hearts drift, eyes stay closed", "eyesClosed": true },
+    { "id": "dragged", "pose": "arms stretched upward as if lifted, surprised cute face, dangling legs", "animBeat": "dangle swing the other way, stretch accent, eyes stay open", "eyesClosed": false }
+  ],
+  "docked": ["docked", "docked-left", "docked-right"],
+  "reserved": [
+    "idle", "thinking", "tool", "talking", "done", "error", "sleeping", "waiting",
+    "petted", "dragged", "docked", "docked-left", "docked-right", "docked-top",
+    "working", "run", "happy", "sleep", "ready"
+  ]
+}
