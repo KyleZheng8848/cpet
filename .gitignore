@@ -41,3 +41,5 @@ assets/skins/cpet-skins/
 .untracked.z
 .idea/
 *.swp
+
+/assets/demo/*.mp4

@@ -16,6 +16,14 @@
 
 应用界面和单元测试不需要模型凭据。真实任务需要已安装并登录的 Agent，或自己的 API 地址与 Key；服务资格、额度及费用由所选供应商决定。
 
+![CPET 真实工作台：隔离浏览器预览](assets/screenshots/workspace.jpg)
+
+[![界面操作剪辑：任务、设置、语言与关于页](assets/demo/preview.gif)](docs/MEDIA.md)
+
+**[观看界面剪辑（MP4）](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/cpet-renderer-walkthrough-0.4.53.mp4)** · [更多截图与说明](docs/MEDIA.md)
+
+画面使用真实 React 界面及隔离的 Electron IPC 示例数据，未启动 Agent、未模拟任务完成；仅展示导航、设置、中英文切换和关于页。视频为无旁白的采样画面剪辑，不是原生桌宠或连续桌面操作录像。
+
 ## Releases · 下载 macOS 应用
 
 [Releases](https://github.com/KyleZheng8848/cpet/releases) · **[0.4.53](https://github.com/KyleZheng8848/cpet/releases/tag/v0.4.53)**
@@ -24,6 +32,13 @@
 - [Intel 芯片 — DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-x64.dmg)
 
 Release 页面同时提供 ZIP 和 `SHA256SUMS.txt` 校验文件。应用采用临时签名，尚未经过 Apple 公证。打开 DMG 后，运行其中的「安装并打开.command」完成安装与启动。
+
+## 先选一种使用方式
+
+- **让桌宠跟 IDE 动：** 安装应用后，在设置中配置 IDE 联动，再在对应 IDE 内运行 Agent；Cursor IDE 联动不要求额外安装 cursor-agent CLI。
+- **在 CPET 内做任务：** 在设置中接入并登录一个真实 Agent CLI，或填写自己的兼容 API；新建任务，选具体项目目录，先从问答模式体验。
+
+空界面和 Demo 不要求模型凭据；真实执行需要对应引擎就绪。详细步骤见下文「两种使用方式」。
 
 ## 功能
 
@@ -101,3 +116,13 @@ npm run build
 ## 许可证
 
 最初由 KyleZheng8848 开发，现由 SofunAI 工作室出品并维护。源码与随附项目素材采用 [MIT License](LICENSE)，保留原[工作室素材许可](assets/brand/LICENSE)。第三方依赖、可选模型权重及用户提供的素材遵循各自许可。[LEGAL.md](LEGAL.md) 保留原有注释语言声明，历史变更见 [CHANGELOG.md](CHANGELOG.md)。
+
+## 贡献与工具致谢
+
+欢迎提交可复现的问题、翻译、皮肤兼容修复或小范围功能改进，从 [贡献指南](CONTRIBUTING.md) 开始。如果对你有帮助，欢迎点 Star。[Codex](https://developers.openai.com/codex/) 协助开源整理、文档与验证；Git 历史记录实际贡献者，支持 Cursor 引擎不等于 Cursor 是项目作者。
+
+## 更多 SofunAI 开源作品
+
+- [Musepaper](https://github.com/KyleZheng8848/musepaper) — AI 壁纸与作品管理
+- [FreeAll](https://github.com/KyleZheng8848/freeall) — 本机 API 账号池与网关
+- [音悦台 / Yinyuetai](https://github.com/KyleZheng8848/yinyuetai) — 本地优先音乐工作台

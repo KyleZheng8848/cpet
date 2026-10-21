@@ -16,6 +16,14 @@ A desktop pet that reflects your coding agent's activity and opens a workspace f
 
 The application shell and unit tests work without model credentials. Real tasks require an installed, authenticated agent or your own API endpoint and key. Provider access, usage limits and billing remain with the service you choose.
 
+![CPET's real workspace in an isolated browser renderer preview](assets/screenshots/workspace.jpg)
+
+[![UI walkthrough: tasks, settings, language and About](assets/demo/preview.gif)](docs/MEDIA.md)
+
+**[Watch the UI walkthrough (MP4)](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/cpet-renderer-walkthrough-0.4.53.mp4)** · [Screenshots and capture notes](docs/MEDIA.md)
+
+Real React renderer with isolated Electron IPC fixtures; no agents run and no completed task is simulated. The silent edited sampled captures demonstrate navigation, settings, language switching and About. They do not show the native desktop pet or continuous desktop operation.
+
 ## Releases · Download the macOS app
 
 [Releases](https://github.com/KyleZheng8848/cpet/releases) · **[0.4.53](https://github.com/KyleZheng8848/cpet/releases/tag/v0.4.53)**
@@ -24,6 +32,13 @@ The application shell and unit tests work without model credentials. Real tasks 
 - [Intel — DMG](https://github.com/KyleZheng8848/cpet/releases/download/v0.4.53/CPET-0.4.53-x64.dmg)
 
 ZIP alternatives and `SHA256SUMS.txt` are available on the release page. The apps use ad hoc signing and are not notarized by Apple. Open the DMG and run `安装并打开.command` to install and launch.
+
+## Pick your first workflow
+
+- **Pet follows your IDE:** install the app, configure IDE integration in Settings, then run an agent in that IDE. Cursor IDE activity does not require the separate cursor-agent CLI.
+- **Run a task inside CPET:** connect an authenticated agent CLI or your own compatible API in Settings, create a task, select a project directory and start with Q&A mode.
+
+The empty UI and Demo need no model credentials. Real execution needs a ready backend. See “Two ways to use it” below.
 
 ## Features
 
@@ -101,3 +116,13 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md), [development notes](docs/DEVELOPMENT.md
 ## License
 
 Originally developed by KyleZheng8848; published and maintained by SofunAI Studio. Source and included project assets are available under the [MIT License](LICENSE), with the original [studio asset license](assets/brand/LICENSE) retained. Dependencies, optional model weights and user-supplied artwork retain their respective licenses. See [LEGAL.md](LEGAL.md) for the original comment-language notice and [CHANGELOG.md](CHANGELOG.md) for change history.
+
+## Contributions and tooling
+
+Start with a reproducible issue, translation, skin compatibility fix or focused improvement using [CONTRIBUTING.md](CONTRIBUTING.md). A star helps others discover CPET if it helps you. [Codex](https://developers.openai.com/codex/) assisted with open-source preparation, documentation and verification. Git history records actual contributors; supporting the Cursor engine does not make Cursor an author.
+
+## More from SofunAI Studio
+
+- [Musepaper](https://github.com/KyleZheng8848/musepaper) — AI wallpapers
+- [FreeAll](https://github.com/KyleZheng8848/freeall) — Local API gateway
+- [音悦台 / Yinyuetai](https://github.com/KyleZheng8848/yinyuetai) — Local-first music workspace
